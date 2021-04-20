@@ -1,12 +1,12 @@
 import os
 import time
-os.system("sudo pigpiod")
+
 time.sleep(1)
 import pigpio
 
 pi = pigpio.pi()
 
-ESC = 18
+ESC = 8
 
 pi.set_servo_pulsewidth(ESC, 0)
 
