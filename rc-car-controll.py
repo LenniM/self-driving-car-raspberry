@@ -3,9 +3,16 @@ import os
 import platform
 import sys
 import threading
+import pigpio
 
 motor = 14
 servo = 23
+
+pi = pigpio.pi()
+
+pi.set_servo_pulsewidth(motor, 1500)
+time.sleep(1)
+pi.set_servo_pulsewidth(motor, 1500)
 
 if (platform.system() ==  "Linux"):
     import pigpio
@@ -18,6 +25,7 @@ if (platform.system() ==  "Linux"):
     pi.set_servo_pulsewidth(motor, 1500)
 else:
     print("Not on Linux")
+print("motor started")
 
 
 #Input getter
@@ -129,7 +137,7 @@ class _MovementControllerWindows:
                     pass
                 #If motorspeed is not above maximum
                 else:
-                    self.initial_motor_speed += 25
+                    self.initial_motor_speed += 15
                     print(self.initial_motor_speed)
 
                 print("w clicked")
@@ -149,7 +157,7 @@ class _MovementControllerWindows:
                     print("minimum backward speed")
                 #If motorspeed is above minimum
                 else:
-                    self.initial_motor_speed -= 25
+                    self.initial_motor_speed -= 15
                     print(self.initial_motor_speed)
                 print("s clicked")  
             #D clicked
@@ -206,15 +214,15 @@ class _MovementControllerLinux:
         if(self.initial_motor_speed > 1500):   
             while (self.initial_motor_speed > 1500):
 
-                self.initial_motor_speed -= 15
-                self.pi.set_servo_pulsewidth(motor, initial_servo_speed)
+                self.initial_motor_speed -= 20
+                self.pi.set_servo_pulsewidth(motor, self.initial_motor_speed)
                 print(self.initial_motor_speed)
                 time.sleep(0.5)
         #backwards
         elif(self.initial_motor_speed < 1500):
              while (self.initial_motor_speed < 1500):
-                self.initial_motor_speed += 15
-                self.pi.set_servo_pulsewidth(motor, initial_servo_speed)
+                self.initial_motor_speed += 20
+                self.pi.set_servo_pulsewidth(motor, self.initial_motor_speed)
                 print(self.initial_motor_speed)
                 time.sleep(0.5)
         self.isTriggered = False
@@ -226,13 +234,13 @@ class _MovementControllerLinux:
         if(self.initial_servo_speed > 1500):
             while (self.initial_servo_speed > 1500):
                 self.initial_servo_speed -= 25
-                self.pi.set_servo_pulsewidth(servo, initial_servo_speed)
+                self.pi.set_servo_pulsewidth(servo, self.initial_servo_speed)
                 print(self.initial_servo_speed)
                 time.sleep(0.3)
         elif(self.initial_servo_speed < 1500):
             while (self.initial_servo_speed < 1500):
                 self.initial_servo_speed += 25
-                self.pi.set_servo_pulsewidth(servo, initial_servo_speed)
+                self.pi.set_servo_pulsewidth(servo, self.initial_servo_speed)
                 print(self.initial_servo_speed)
                 time.sleep(0.3)
         self.isTriggeredTurn = False
@@ -251,9 +259,9 @@ class _MovementControllerLinux:
             if(val == 27):
                 print("Esc clicked")
                 self.initial_motor_speed = 1500
-                self.pi.set_servo_pulsewidth(motor, initial_servo_speed)
+                self.pi.set_servo_pulsewidth(motor, self.initial_motor_speed)
                 self.initial_servo_speed = 1500
-                self.pi.set_servo_pulsewidth(servo, initial_servo_speed)
+                self.pi.set_servo_pulsewidth(servo, self.initial_servo_speed)
                 sys.exit()
 
             #MOTOR
@@ -261,10 +269,10 @@ class _MovementControllerLinux:
             elif(val == 119):
                 if(self.initial_motor_speed < 1500):
                     self.initial_motor_speed = 1500
-                    self.pi.set_servo_pulsewidth(motor, initial_servo_speed)
+                    self.pi.set_servo_pulsewidth(motor, self.initial_motor_speed)
                     time.sleep(0.4)
                 #If motorspeed is above maximum
-                if(self.initial_motor_speed >= 1750):
+                if(self.initial_motor_speed >= 1600):
                     print("maximum forward speed")
                     maxForward = threading.Thread(target=self.slowDownIfNeed)
                     if(self.isTriggered == False):
@@ -273,7 +281,7 @@ class _MovementControllerLinux:
                 #If motorspeed is not above maximum
                 else:
                     self.initial_motor_speed += 25
-                    self.pi.set_servo_pulsewidth(motor, initial_servo_speed)
+                    self.pi.set_servo_pulsewidth(motor, self.initial_motor_speed)
                     print(self.initial_motor_speed)
 
                 print("w clicked")
@@ -281,11 +289,12 @@ class _MovementControllerLinux:
             elif(val == 115):
                 if(self.initial_motor_speed > 1500):
                     self.initial_motor_speed = 1500
-                    self.pi.set_servo_pulsewidth(motor, initial_servo_speed)
-                    time.sleep(0.4)
-
+                    self.pi.set_servo_pulsewidth(motor, self.initial_motor_speed)
+                    time.sleep(0.7)
+		    self.pi.set_servo_pulsewidth(motor, 1400)
+		    time.sleep(0.3)
                 #If motorspeed is below minimum
-                if(self.initial_motor_speed <= 1250):
+                if(self.initial_motor_speed <= 1350):
                     maxBackwards = threading.Thread(target=self.slowDownIfNeed)
 
                     if(self.isTriggered == False):
@@ -295,7 +304,7 @@ class _MovementControllerLinux:
                 #If motorspeed is above minimum
                 else:
                     self.initial_motor_speed -= 25
-                    self.pi.set_servo_pulsewidth(motor, initial_servo_speed)
+                    self.pi.set_servo_pulsewidth(motor, self.initial_motor_speed)
                     print(self.initial_motor_speed)
                 print("s clicked")  
             
@@ -305,7 +314,7 @@ class _MovementControllerLinux:
             elif(val == 100):
                 if(self.initial_servo_speed < 1500):
                     self.initial_servo_speed = 1500
-                    self.pi.set_servo_pulsewidth(servo, initial_servo_speed)
+                    self.pi.set_servo_pulsewidth(servo, self.initial_servo_speed)
                     
 
                 if(self.initial_servo_speed >= 1900):
@@ -316,7 +325,7 @@ class _MovementControllerLinux:
                     pass
                 else:
                     self.initial_servo_speed += 50
-                    self.pi.set_servo_pulsewidth(servo, initial_servo_speed)
+                    self.pi.set_servo_pulsewidth(servo, self.initial_servo_speed)
                     print(self.initial_servo_speed)
 
 
@@ -326,10 +335,10 @@ class _MovementControllerLinux:
 
                 if(self.initial_servo_speed > 1500):
                     self.initial_servo_speed = 1500
-                    self.pi.set_servo_pulsewidth(servo, initial_servo_speed)
+                    self.pi.set_servo_pulsewidth(servo, self.initial_servo_speed)
 
                     
-                if(self.initial_servo_speed <= 1250):
+                if(self.initial_servo_speed <= 1100):
                     print("maximum left turn")
                     maxLeft = threading.Thread(target=self.turnIfNeed)
                     if(self.isTriggeredTurn == False):
@@ -337,7 +346,7 @@ class _MovementControllerLinux:
                     pass
                 else:
                     self.initial_servo_speed -= 50
-                    self.pi.set_servo_pulsewidth(servo, initial_servo_speed)
+                    self.pi.set_servo_pulsewidth(servo, self.initial_servo_speed)
                     print(self.initial_servo_speed)
                 print("a clicked")
 
