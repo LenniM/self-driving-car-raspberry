@@ -25,7 +25,7 @@ class Record_Data_Linux(object):
 
     def record(self):
         servo_data = self.current_servo_data
-        self.camera.capture(self.rawCapture, format="jpg")
+        self.camera.capture(self.rawCapture, format="png")
         image = self.rawCapture.array
 
         img_rotate_180 = cv2.rotate(image, cv2.ROTATE_180)
