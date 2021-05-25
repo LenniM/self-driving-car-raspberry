@@ -40,7 +40,7 @@ class Record_Data_Linux(object):
                 time.sleep(0.5)
                 print("camera started")
                # automatic_name = (os.getcwd() + "/training-data-one/", "%s_%03d_%03d.jpg" % ("training-data-one",self.index,self.current_servo_data))
-                for i, filename in enumerate(camera.capture_continuous(os.getcwd() + "/training-data-one/" + +"training-data-one" + self.index + self.current_servo_data + ".jpg")):
+                for i, filename in enumerate(camera.capture_continuous(os.getcwd() + "/training-data-one/" + "training-data-one" + self.index + self.current_servo_data + ".jpg")):
                     print(i)
                     self.index += 1
 
