@@ -6,6 +6,7 @@ import io
 if(platform.system() == "Linux"):
     from picamera.array import PiRGBArray
     from picamera import PiCamera
+    import picamera
     import time
     import cv2
 
@@ -33,9 +34,9 @@ class Record_Data_Linux(object):
             camera.framerate = 80
             time.sleep(2)
             # Set up 40 in-memory streams
-            outputs = [io.BytesIO() for i in range(40)]
+            outputs = [io.BytesIO() for i in range(1)]
             start = time.time()
-            image = camera.capture_sequence(outputs, 'jpeg', use_video_port=True)
+            camera.capture_sequence(outputs, 'png', use_video_port=True)
             img_rotate_180 = cv2.rotate(image, cv2.ROTATE_180)
             cv2.imwrite(os.getcwd() + "/training-data-one", "%s_%03d_%03d.jpg" % ("training-data-one",index,servo_data), img_rotate_180)
             cv2.waitKey(0)
