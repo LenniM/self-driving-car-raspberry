@@ -13,7 +13,6 @@ if(platform.system() == "Linux"):
 else:
     print("CANNOT IMPORT TRAINING DATA PACKAGES - NOT ON LINUX")
 
-index = 0
 
 class Record_Data_Linux(object):
     def __init__(self, current_servo_data):
@@ -22,9 +21,10 @@ class Record_Data_Linux(object):
         self.current_servo_data = current_servo_data
         self.shouldStop = False
         self.shouldStart = False
-
+        self.index = 0
         if not os.path.exists(os.getcwd() + "/training-data-one"):
             os.makedirs(os.getcwd() + "/training-data-one")
+            
     def onServoDataChanged(self):
         pass
 
@@ -40,9 +40,9 @@ class Record_Data_Linux(object):
                 time.sleep(0.5)
                 print("camera started")
 
-                for i, filename in enumerate(camera.capture_continuous(os.getcwd() + "/training-data-one/", "%s_%03d_%03d.jpg" % ("training-data-one",index,self.current_servo_data))):
+                for i, filename in enumerate(camera.capture_continuous(os.getcwd() + "/training-data-one/", "%s_%03d_%03d.jpg" % ("training-data-one",self.index,self.current_servo_data))):
                     print(i)
-                    index += 1
+                    self.index += 1
 
                     if(self.shouldStop == True):
                         break
