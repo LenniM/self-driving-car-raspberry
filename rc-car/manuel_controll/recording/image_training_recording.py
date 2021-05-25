@@ -39,8 +39,8 @@ class Record_Data_Linux(object):
                 camera.rotation = 180
                 time.sleep(0.5)
                 print("camera started")
-
-                for i, filename in enumerate(camera.capture_continuous(os.getcwd() + "/training-data-one/", "%s_%03d_%03d.jpg" % ("training-data-one",self.index,self.current_servo_data))):
+                automatic_name = (os.getcwd() + "/training-data-one/", "%s_%03d_%03d.jpg" % ("training-data-one",self.index,self.current_servo_data))
+                for i, filename in enumerate(camera.capture_continuous(automatic_name)):
                     print(i)
                     self.index += 1
 
