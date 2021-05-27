@@ -40,7 +40,9 @@ class Record_Data_Linux(object):
                 camera.framerate = 60
                 #outputs = [io.BytesIO() for i in range(40)]
                 outputs = io.BytesIO()
-                camera.capture_sequence(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + outputs + "-" + str(self.current_servo_data) + ".jpg", use_video_port=True)
+               # camera.capture_sequence(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + outputs + "-" + str(self.current_servo_data) + ".jpg", use_video_port=True)
+                camera.capture_sequence(outputs, "jpeg", use_video_port=True)
+
                 if(self.shouldStop == True):
                     break
            # with picamera.PiCamera() as camera:
