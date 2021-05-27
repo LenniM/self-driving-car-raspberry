@@ -33,19 +33,28 @@ class Record_Data_Linux(object):
 
     def startRecording(self):
         self.shouldStart = True
-        if self.shouldStart == True:
+        if self.shouldStart == True && self.shouldStop == False:
             with picamera.PiCamera() as camera:
                 camera.resolution = (1280, 720)
                 camera.rotation = 180
-                time.sleep(0.5)
-                print("camera started")
+                camera.framerate = 60
+                #outputs = [io.BytesIO() for i in range(40)]
+                outputs = io.BytesIO()
+                camera.capture_sequence(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + outputs + ".jpg", use_video_port=True)
+                if(self.shouldStop == True):
+                    break
+           # with picamera.PiCamera() as camera:
+            #    camera.resolution = (1280, 720)
+             #   camera.rotation = 180
+              #  time.sleep(0.5)
+              #  print("camera started")
                # automatic_name = (os.getcwd() + "/training-data-one/", "%s_%03d_%03d.jpg" % ("training-data-one",self.index,self.current_servo_data))
-                for i, filename in enumerate(camera.capture_continuous(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".jpg")):
-                    print(i)
-                    self.index += 1
-
-                    if(self.shouldStop == True):
-                        break
+              #  for i, filename in enumerate(camera.capture_continuous(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".jpg")):
+               #     print(i)
+                #    self.index += 1
+#
+  #                  if(self.shouldStop == True):
+ #                       break
 
 
 
