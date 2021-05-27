@@ -2,6 +2,7 @@ import platform
 import os
 import io
 import threading
+import numpy as np
 
 if(platform.system() == "Linux"):
     from picamera.array import PiRGBArray
@@ -39,9 +40,17 @@ class Record_Data_Linux(object):
                 camera.rotation = 180
                 camera.framerate = 60
                 #outputs = [io.BytesIO() for i in range(40)]
-                outputs = io.BytesIO()
+                stream = io.BytesIO()
                # camera.capture_sequence(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + outputs + "-" + str(self.current_servo_data) + ".jpg", use_video_port=True)
-                camera.capture_sequence(outputs, "jpeg", use_video_port=True)
+                camera.capture_sequence(stream, "jpeg", use_video_port=True)
+                
+                data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+                
+                img = cv2.decode(data, 1)
+                
+                cv2.imwrite(os.getcwd() + "/training-data-one", "%s_%03d_%03d.jpg" % ("training-data-one",self.index,self.current_servo_data), img)
+                
+                self.index += 1
 
                 if(self.shouldStop == True):
                     break
