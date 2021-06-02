@@ -34,12 +34,12 @@ class Record_Data_Linux(object):
 
     def startRecording(self):
         self.shouldStart = True
-        if self.shouldStart == True && self.shouldStop == False:
+        if self.shouldStart == True and self.shouldStop == False:
             with picamera.PiCamera() as camera:
                 camera.resolution = (1280, 720)
                 camera.rotation = 180
                 camera.framerate = 60
-                while shouldStop == False:
+                while self.shouldStop == False:
                     camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
                     self.index += 1
                 #outputs = [io.BytesIO() for i in range(40)]
@@ -55,8 +55,8 @@ class Record_Data_Linux(object):
                 
                # self.index += 1
 
-                if(self.shouldStop == True):
-                    break
+             #   if(self.shouldStop == True):
+              #      break
            # with picamera.PiCamera() as camera:
             #    camera.resolution = (1280, 720)
              #   camera.rotation = 180
