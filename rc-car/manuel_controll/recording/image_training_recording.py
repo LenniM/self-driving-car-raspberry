@@ -20,20 +20,20 @@ else:
 
 class Record_Data_Linux(object):
     def __init__(self, current_servo_data):
-        self.camera = picamera.PiCamera()
-        self.camera.resolution = (1280, 720)
-        self.camera.rotation = 180
+       # self.camera = picamera.PiCamera()
+        #self.camera.resolution = (1280, 720)
+        #self.camera.rotation = 180
         # self.rawCapture = PiRGBArray(self.camera)
         self.current_servo_data = current_servo_data
-        self.shouldStop = False
-        self.shouldStart = False
-        self.index = 0
+       # self.shouldStop = False
+       # self.shouldStart = False
+        #self.index = 0
        # self.camera = None
-        if not os.path.exists(os.getcwd() + "/training-data-one"):
-            os.makedirs(os.getcwd() + "/training-data-one")
+        #if not os.path.exists(os.getcwd() + "/training-data-one"):
+         #   os.makedirs(os.getcwd() + "/training-data-one")
       #  self.startRecording
-        self.camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
-        self.index += 1
+        #self.camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
+        #self.index += 1
             
     def onServoDataChanged(self):
         pass
@@ -45,10 +45,31 @@ class Record_Data_Linux(object):
         while self.shouldStop == False:
             self.camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
             self.index += 1
+    
+    def returnData(self):
+        return self.current_servo_data
 
     def startRecording(self):
         self.camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
         self.index += 1
+        
+class RecordingData():
+    def __init__(self):
+        self.camera = picamera.PiCamera()
+        self.camera.resolution = (1280, 720)
+        self.camera.rotation = 180
+        self.index = 0
+        if not os.path.exists(os.getcwd() + "/training-data-one"):
+            os.makedirs(os.getcwd() + "/training-data-one")
+        self.current_servo_data = Record_Data_Linux().returnData()
+        self.shouldStop = False
+    def stopRecording(self):
+        self.shouldStop = True
+    def startRecording(self):
+        while shouldStop == False:
+            self.camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
+            self.index += 1
+        
         #startVideoCapture = threading.Thread(target=self.videoCapture)#
    #     startVideoCapture = Process(target=self.videoCapture)
 
