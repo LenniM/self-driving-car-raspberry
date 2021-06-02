@@ -320,6 +320,8 @@ class MovementControllerLinux:
 		#startRecordingThread = threading.Thread(thread=Record_Data_Linux(self.initial_servo_speed).startRecording)
                	#startRecordingThread.start()
 		#Record_Data_Linux(self.initial_servo_speed).startRecording
+	 	Record_Data_Linux(self.initial_servo_speed).startRecording()
+
                 print("r clicked")
 
             
