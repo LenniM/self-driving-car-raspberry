@@ -41,6 +41,7 @@ class Record_Data_Linux(object):
                 camera.framerate = 60
                 while shouldStop == False:
                     camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
+                    self.index += 1
                 #outputs = [io.BytesIO() for i in range(40)]
           #      stream = io.BytesIO()
                # camera.capture_sequence(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + outputs + "-" + str(self.current_servo_data) + ".jpg", use_video_port=True)
