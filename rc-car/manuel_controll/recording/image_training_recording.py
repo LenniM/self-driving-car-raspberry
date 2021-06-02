@@ -32,6 +32,8 @@ class Record_Data_Linux(object):
         if not os.path.exists(os.getcwd() + "/training-data-one"):
             os.makedirs(os.getcwd() + "/training-data-one")
       #  self.startRecording
+        self.camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
+        self.index += 1
             
     def onServoDataChanged(self):
         pass
@@ -45,10 +47,12 @@ class Record_Data_Linux(object):
             self.index += 1
 
     def startRecording(self):
+        self.camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
+        self.index += 1
         #startVideoCapture = threading.Thread(target=self.videoCapture)#
-        startVideoCapture = Process(target=self.videoCapture)
+   #     startVideoCapture = Process(target=self.videoCapture)
 
-        startVideoCapture.start()
+      #  startVideoCapture.start()
         
      #   self.shouldStart = True
       #  if self.shouldStart == True and self.shouldStop == False:
