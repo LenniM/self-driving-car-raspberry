@@ -320,7 +320,7 @@ class MovementControllerLinux:
                 print("a clicked")
             elif(val == 114):
 		def startFuckingClass():
-			RecordingData().startRecording()
+		    RecordingData().startRecording()
 		recordProcess = Process(target=startFuckingClass)
 		recordProcess.start()
 		#startRecordingThread = threading.Thread(thread=Record_Data_Linux(self.initial_servo_speed).startRecording)
