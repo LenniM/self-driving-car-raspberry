@@ -319,7 +319,7 @@ class MovementControllerLinux:
 
                 print("a clicked")
             elif(val == 114):
-		def startFuckingClass():
+		def startClass():
 		    RecordingData().startRecording()
 		recordProcess = Process(target=startFuckingClass)
 		recordProcess.start()
