@@ -319,7 +319,7 @@ class MovementControllerLinux:
 
                 print("a clicked")
             elif(val == 114):
-		recordProcess = Process(target=RecordingData().startRecording)
+		recordProcess = Process(target=RecordingData.startRecording)
 		recordProcess.start()
 		#startRecordingThread = threading.Thread(thread=Record_Data_Linux(self.initial_servo_speed).startRecording)
                	#startRecordingThread.start()
