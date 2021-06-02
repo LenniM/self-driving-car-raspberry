@@ -17,7 +17,9 @@ else:
 
 class Record_Data_Linux(object):
     def __init__(self, current_servo_data):
-        # self.camera = PiCamera()
+        self.camera = picamera.PiCamera()
+        self.camera.resolution = (1280, 720)
+        self.camera.rotation = 180
         # self.rawCapture = PiRGBArray(self.camera)
         self.current_servo_data = current_servo_data
         self.shouldStop = False
@@ -40,17 +42,20 @@ class Record_Data_Linux(object):
             self.index += 1
 
     def startRecording(self):
-        self.shouldStart = True
-        if self.shouldStart == True and self.shouldStop == False:
+        startVideoCapture = threading.Thread(target=self.videoCapture)
+        startVideoCapture.start()
+        
+     #   self.shouldStart = True
+      #  if self.shouldStart == True and self.shouldStop == False:
           #  startVideoCapture = threading.Thread(target=self.videoCapture) 
-            with picamera.PiCamera() as camera:
-                camera.resolution = (1280, 720)
-                camera.rotation = 180
-                camera.framerate = 60
+       #     with picamera.PiCamera() as camera:
+        #        camera.resolution = (1280, 720)
+         #       camera.rotation = 180
+          #      camera.framerate = 60
                # startVideoCapture.start()
                # while self.shouldStop == False:
-                camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
-                self.index += 1
+           #     camera.capture(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + str(self.current_servo_data) + ".png")
+            #    self.index += 1
                 #outputs = [io.BytesIO() for i in range(40)]
           #      stream = io.BytesIO()
                # camera.capture_sequence(os.getcwd() + "/training-data-one/" + "training-data-one" + "-" + str(self.index) + "-" + outputs + "-" + str(self.current_servo_data) + ".jpg", use_video_port=True)
