@@ -26,6 +26,7 @@ class Record_Data_Linux(object):
        # self.camera = None
         if not os.path.exists(os.getcwd() + "/training-data-one"):
             os.makedirs(os.getcwd() + "/training-data-one")
+        self.startRecording
             
     def onServoDataChanged(self):
         pass
