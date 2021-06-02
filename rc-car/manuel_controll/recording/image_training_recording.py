@@ -3,6 +3,9 @@ import os
 import io
 import threading
 import numpy as np
+from multiprocessing import Process
+
+
 
 if(platform.system() == "Linux"):
     from picamera.array import PiRGBArray
@@ -28,7 +31,7 @@ class Record_Data_Linux(object):
        # self.camera = None
         if not os.path.exists(os.getcwd() + "/training-data-one"):
             os.makedirs(os.getcwd() + "/training-data-one")
-        self.startRecording
+      #  self.startRecording
             
     def onServoDataChanged(self):
         pass
@@ -42,7 +45,9 @@ class Record_Data_Linux(object):
             self.index += 1
 
     def startRecording(self):
-        startVideoCapture = threading.Thread(target=self.videoCapture)
+        #startVideoCapture = threading.Thread(target=self.videoCapture)#
+        startVideoCapture = Process(target=self.videoCapture)
+
         startVideoCapture.start()
         
      #   self.shouldStart = True
